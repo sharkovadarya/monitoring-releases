@@ -1,0 +1,22 @@
+[
+  {
+    "name": "v3.11.0",
+    "commit": {
+      "sha": "674a9c5b9c0c486b596eccfedebb5db5cc6f1c3b",
+      "url": "https://api.github.com/repos/rspec/rspec-metagem/commits/674a9c5b9c0c486b596eccfedebb5db5cc6f1c3b"
+    },
+    "zipball_url": "https://api.github.com/repos/rspec/rspec-metagem/zipball/refs/tags/v3.11.0",
+    "tarball_url": "https://api.github.com/repos/rspec/rspec-metagem/tarball/refs/tags/v3.11.0",
+    "node_id": "MDM6UmVmMjM5MDAxOnJlZnMvdGFncy92My4xMS4w"
+  },
+  {
+    "name": "v3.10.0",
+    "commit": {
+      "sha": "d56f207817d20c700e87ac281da6039b2182aab4",
+      "url": "https://api.github.com/repos/rspec/rspec-metagem/commits/d56f207817d20c700e87ac281da6039b2182aab4"
+    },
+    "zipball_url": "https://api.github.com/repos/rspec/rspec-metagem/zipball/refs/tags/v3.10.0",
+    "tarball_url": "https://api.github.com/repos/rspec/rspec-metagem/tarball/refs/tags/v3.10.0",
+    "node_id": "MDM6UmVmMjM5MDAxOnJlZnMvdGFncy92My4xMC4w"
+  }
+]

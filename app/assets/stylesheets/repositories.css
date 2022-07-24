@@ -1,0 +1,72 @@
+table, th, td {
+    border: 1px solid black;
+}
+
+.repo_row {
+    max-height: 100px;
+    height: 100px;
+}
+
+.release_notes_td {
+    /*max-width: 500px;*/
+    /*position: relative;*/
+    width: 65%;
+}
+
+.release_notes_container {
+    position: relative;
+}
+
+.release_notes {
+    height: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 10px;
+    width: 100%;
+}
+
+.release_notes_readmore {
+    background-image: linear-gradient(0deg, rgba(255,255,255,1) 22%, rgba(255,255,255,0) 100%);
+    height: 75px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    color: #2E2F30;
+    font-weight: bold;
+}
+
+.release_notes_readmore span {
+    position: absolute;
+    bottom: 5px;
+}
+
+.unread {
+    color: red;
+}
+
+.read {
+    color: #2E2F30;
+}
+
+.form-box {
+    display:flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+.repo_view {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.repo_view_row {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+

@@ -1,0 +1,12 @@
+<h1><%= @repository.name %></h1>
+
+<p class="<%= @repository.read ? "read" : "unread" %>"><%= @repository.latest_tag %></p>
+
+<p><%= @repository.latest_release_notes %></p>
+
+<p><%= @repository.latest_release_date %></p>
+
+<%= link_to "Destroy", repository_path(@repository), data: {
+  turbo_method: :delete,
+  turbo_confirm: "Are you sure?"
+} %>

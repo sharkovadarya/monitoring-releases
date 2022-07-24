@@ -1,0 +1,48 @@
+<h1>Repositories</h1>
+
+
+<div class="repo_form">
+  <h4 id="seimei">Add a new repository</h4>
+  <%= render 'form' %>
+</div>
+
+<div class="repo_view">
+  <table class="repo_table">
+    <thead>
+    <tr>
+      <td><b>Name</b></td>
+      <td><b>Latest tag</b></td>
+      <td><b>Latest release date</b></td>
+      <td><b>Latest release notes</b></td>
+      <td></td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @repositories.each do |repo| %>
+      <tr class="repo_row">
+        <td><a href=<%=repo.url%> target="_blank" ><%= repo.name %></a></td>
+        <% tag_class = repo.read ? "read" : "unread" %>
+        <td class=<%= tag_class %>><%= repo.latest_tag %></td>
+        <td><%= repo.latest_release_date.to_date %></td>
+        <td class="release_notes_td">
+          <div class="release_notes_container">
+            <div class="release_notes"><%= markdown repo.latest_release_notes %></div>
+            <div class="release_notes_readmore">
+              <span>Expand</span>
+            </div>
+          </div>
+        </td>
+        <td>
+          <%= link_to "Destroy", repository_path(repo), data: {
+            turbo_method: :delete,
+            turbo_confirm: "Are you sure?"
+          } %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+</div>
+

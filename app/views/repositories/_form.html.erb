@@ -1,0 +1,17 @@
+<%= form_with model: @repository do |form| %>
+  <div class="form-box">
+    <div>
+      <%= form.label :owner %><br>
+      <%= form.text_field :owner %>
+    </div>
+
+    <div>
+      <%= form.label :name %><br>
+      <%= form.text_field :name %>
+    </div>
+
+    <div>
+      <%= form.submit "Add" %>
+    </div>
+  </div>
+<% end %>
