@@ -28,5 +28,8 @@ module Monitoring
         repo.save
       end
     end
+
+    Rails.logger = Logger.new(STDOUT)
+    config.logger = ActiveSupport::Logger.new("log/#{Rails.env}.log")
   end
 end
