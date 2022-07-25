@@ -7,7 +7,9 @@ module Services
     BUG_FIXES = ['bug fixes', 'fixed']
     def self.set_repo_latest_release(repo, client)
       repo_path = repo.owner + '/' + repo.name
-      latest_release = nil
+
+      latest_release_notes = ""
+
       begin
         releases = client.releases(repo_path)
       rescue Octokit::Error => e
@@ -39,18 +41,19 @@ module Services
         releases.each do |release|
           latest_release = release
           latest_tag = release.tag_name
-          if important_tag? latest_tag
+          if latest_release.nil? ? important_tag?(latest_tag) : important_release?(latest_release)
             break
           end
         end
         latest_tag = latest_release.tag_name
-        repo.latest_release_notes = latest_release.body
+        latest_release_notes = latest_release.body
         latest_release_date = latest_release.published_at
       end
-      if latest_release.nil? ? important_tag?(latest_tag) : important_release?(latest_release)
+      unless latest_tag.eql? repo.latest_tag
         repo.read = false
         repo.latest_tag = latest_tag
         repo.latest_release_date = latest_release_date
+        repo.latest_release_notes = latest_release_notes
       end
     end
 

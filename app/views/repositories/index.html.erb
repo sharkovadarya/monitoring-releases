@@ -1,9 +1,14 @@
 <h1>Repositories</h1>
 
+<div class="index-header">
+  <div class="repo_form">
+    <h4>Add a new repository</h4>
+    <%= render 'form' %>
+  </div>
 
-<div class="repo_form">
-  <h4>Add a new repository</h4>
-  <%= render 'form' %>
+  <div class="clear-all">
+    <%= button_to 'Update release data', action: :update_all_releases %>
+  </div>
 </div>
 
 <div class="repo_view">
@@ -24,7 +29,7 @@
         <td><a href=<%=repo.url%> target="_blank" ><%= repo.name %></a></td>
         <% tag_class = repo.read ? "read" : "unread" %>
         <td class=<%= tag_class %>><%= repo.latest_tag %></td>
-        <td><%= repo.latest_release_date.to_date %></td>
+        <td><%= repo.latest_release_date.nil? ? "" : repo.latest_release_date.to_date %></td>
         <td class="release_notes_td">
           <div class="release_notes_container">
             <div class="release_notes"><%= markdown repo.latest_release_notes %></div>

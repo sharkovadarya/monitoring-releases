@@ -2,14 +2,19 @@ table, th, td {
     border: 1px solid black;
 }
 
+.index-header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
 .repo_row {
     max-height: 100px;
     height: 100px;
 }
 
 .release_notes_td {
-    /*max-width: 500px;*/
-    /*position: relative;*/
     width: 65%;
 }
 
@@ -69,4 +74,3 @@ table, th, td {
     flex-direction: row;
     gap: 15px;
 }
-

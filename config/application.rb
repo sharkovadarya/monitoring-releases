@@ -20,16 +20,5 @@ module Monitoring
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.autoload_paths << "#{Rails.root}/lib"
-
-    config.after_initialize do
-      client = Octokit::Client.new(:access_token => ENV['PERSONAL_ACCESS_TOKEN'])
-      Repository.all.each do |repo|
-        Services::Monitoring.set_repo_latest_release(repo, client)
-        repo.save
-      end
-    end
-
-    Rails.logger = Logger.new(STDOUT)
-    config.logger = ActiveSupport::Logger.new("log/#{Rails.env}.log")
   end
 end

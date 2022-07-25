@@ -7,12 +7,14 @@ class Repository < ApplicationRecord
     end
   end
 
+  # utility method
   def self.clear_all
     all.each do |repo|
       repo.latest_tag = Repository.column_defaults["latest_tag"]
       repo.latest_release_notes = Repository.column_defaults["latest_release_notes"]
       repo.latest_release_date = Repository.column_defaults["latest_release_date"]
       repo.read = true
+      repo.save
     end
   end
 
