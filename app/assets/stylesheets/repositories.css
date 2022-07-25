@@ -9,20 +9,20 @@ table, th, td {
     justify-content: space-between;
 }
 
-.repo_row {
+.repo-row {
     max-height: 100px;
     height: 100px;
 }
 
-.release_notes_td {
+.release-notes__td {
     width: 65%;
 }
 
-.release_notes_container {
+.release-notes__container {
     position: relative;
 }
 
-.release_notes {
+.release-notes__content {
     height: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -30,7 +30,7 @@ table, th, td {
     width: 100%;
 }
 
-.release_notes_readmore {
+.release-notes__readmore {
     background-image: linear-gradient(0deg, rgba(255,255,255,1) 22%, rgba(255,255,255,0) 100%);
     height: 75px;
     position: absolute;
@@ -42,7 +42,7 @@ table, th, td {
     font-weight: bold;
 }
 
-.release_notes_readmore span {
+.release-notes__readmore span {
     position: absolute;
     bottom: 5px;
 }
@@ -62,7 +62,7 @@ table, th, td {
     gap: 15px;
 }
 
-.repo_view {
+.repo-view {
     display: flex;
     flex-direction: column;
     gap: 20px;

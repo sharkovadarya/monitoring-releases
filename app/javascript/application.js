@@ -4,10 +4,10 @@ import "controllers"
 
 import "jquery";
 
-const releaseNotesReadmore = $('.release_notes_readmore');
+const releaseNotesReadmore = $('.release-notes__readmore');
 
 releaseNotesReadmore.click(function() {
-    const releaseNotes = $(this).closest('div[class=release_notes_container]').children('.release_notes:first');
+    const releaseNotes = $(this).closest('div[class=release-notes__container]').children('.release-notes__content:first');
     if (releaseNotes.prop('cell_expanded') === true) {
         releaseNotes.animate({height: releaseNotes.prop('old_height')}, 500);
         releaseNotes.prop('cell_expanded', false);
@@ -28,6 +28,6 @@ releaseNotesReadmore.click(function() {
 
 releaseNotesReadmore.each(function( index ) {
     console.log( index + ": " + $( this ).text() );
-    const releaseNotes = $(this).closest('div[class=release_notes_container]').children('.release_notes:first');
+    const releaseNotes = $(this).closest('div[class=release-notes__container]').children('.release-notes__content:first');
     $(this).toggle(releaseNotes.text().length > 0);
 });
