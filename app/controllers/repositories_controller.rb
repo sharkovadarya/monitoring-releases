@@ -1,6 +1,5 @@
 class RepositoriesController < ApplicationController
   after_action :mark_everything_as_read, only: [:index, :show]
-  before_action :print_read_status, only: :index
 
   @client = Octokit::Client.new(:access_token => ENV['PERSONAL_ACCESS_TOKEN'])
 
@@ -22,7 +21,6 @@ class RepositoriesController < ApplicationController
   end
 
   def create
-    puts "hello!"
     @repository = Repository.new(repository_params)
 
     if @repository.save
@@ -49,10 +47,6 @@ class RepositoriesController < ApplicationController
     end
   end
 
-  def self.whatever
-    puts "whatever"
-  end
-
   private
   def repository_params
     params.require(:repository).permit(:name, :owner)
@@ -63,12 +57,5 @@ class RepositoriesController < ApplicationController
       repo.read = true
       repo.save
     end
-  end
-
-  def print_read_status
-    Repository.all.each do |repo|
-      puts repo.read
-    end
-    puts "yep yep"
   end
 end

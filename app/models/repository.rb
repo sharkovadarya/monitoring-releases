@@ -7,6 +7,15 @@ class Repository < ApplicationRecord
     end
   end
 
+  def self.clear_all
+    all.each do |repo|
+      repo.latest_tag = Repository.column_defaults["latest_tag"]
+      repo.latest_release_notes = Repository.column_defaults["latest_release_notes"]
+      repo.latest_release_date = Repository.column_defaults["latest_release_date"]
+      repo.read = true
+    end
+  end
+
   def url
     "https://github.com/" + owner + "/" + name
   end
