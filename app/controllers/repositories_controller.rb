@@ -1,7 +1,10 @@
 class RepositoriesController < ApplicationController
-  after_action :mark_everything_as_read, only: [:index, :show]
+  after_action :mark_everything_as_read, only: [:index]
 
-  @client = Octokit::Client.new(:access_token => ENV['PERSONAL_ACCESS_TOKEN'])
+  def initialize
+    super
+    @client = Octokit::Client.new(:access_token => ENV['PERSONAL_ACCESS_TOKEN'])
+  end
 
   def index
     # update_repo_tags

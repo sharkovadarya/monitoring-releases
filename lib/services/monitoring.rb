@@ -2,8 +2,8 @@ require 'octokit'
 
 module Services
   class Monitoring
-    ONLY_BUG_FIXES_PHRASES = ['bug fixes only', 'only bug fixes']
-    NEW_FEATURES_PHRASES = ['new features', 'features', 'added', 'enhancements']
+    ONLY_BUG_FIXES = ['bug fixes only', 'only bug fixes']
+    NEW_FEATURES = ['new features', 'features', 'added', 'enhancements']
     BUG_FIXES = ['bug fixes', 'fixed']
     def self.set_repo_latest_release(repo, client)
       repo_path = repo.owner + '/' + repo.name
@@ -72,13 +72,13 @@ module Services
       end
 
       release_notes = release.body.downcase
-      if ONLY_BUG_FIXES_PHRASES.any? { |phrase| release_notes.include? phrase }
+      if ONLY_BUG_FIXES.any? { |phrase| release_notes.include? phrase }
         return false
       end
 
       sep = $/.nil? ? "\n" : $/
       if BUG_FIXES.any? { |p| release_notes.include?('##' + p + sep) || release_notes.include?(p + ':' + sep) } &&
-        !NEW_FEATURES_PHRASES.any? { |p| release_notes.include? p }
+        !NEW_FEATURES.any? { |p| release_notes.include? p }
         return false
       end
 

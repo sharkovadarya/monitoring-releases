@@ -32,7 +32,10 @@
         <td><%= repo.latest_release_date.nil? ? "" : repo.latest_release_date.to_date %></td>
         <td class="release-notes__td">
           <div class="release-notes__container">
-            <div class="release-notes__content"><%= markdown repo.latest_release_notes %></div>
+            <div class="release-notes__content">
+              <%= link_to "See full entry", repository_path(repo), method: :get %><br><br>
+              <%= markdown repo.release_notes_new_features %>
+            </div>
             <div class="release-notes__readmore">
               <span>Expand</span>
             </div>

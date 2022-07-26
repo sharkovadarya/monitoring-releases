@@ -10,8 +10,7 @@ table, th, td {
 }
 
 .repo-row {
-    max-height: 100px;
-    height: 100px;
+    max-height: 200px;
 }
 
 .release-notes__td {
@@ -23,7 +22,7 @@ table, th, td {
 }
 
 .release-notes__content {
-    height: 150px;
+    height: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
     padding: 10px;

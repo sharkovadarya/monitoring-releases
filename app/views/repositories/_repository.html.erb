@@ -1,10 +1,10 @@
-<h1><%= @repository.name %></h1>
+<h1><%= @repository.owner %>/<%= @repository.name %></h1>
 
 <p class="<%= @repository.read ? "read" : "unread" %>"><%= @repository.latest_tag %></p>
 
-<p><%= @repository.latest_release_notes %></p>
-
 <p><%= @repository.latest_release_date %></p>
+
+<p><%= markdown @repository.latest_release_notes %></p>
 
 <%= link_to "Destroy", repository_path(@repository), data: {
   turbo_method: :delete,
