@@ -4,12 +4,10 @@ require 'open-uri'
 module Services
   class Monitoring
     ONLY_BUG_FIXES = ['bug fixes only', 'only bug fixes']
-    NEW_FEATURES = ['new features', 'features', 'added', 'enhancements']
-    BUG_FIXES = ['bug fixes', 'fixed']
+    NEW_FEATURES = ['new features', 'features', 'added', 'enhancements', 'feature changes']
+    BUG_FIXES = ['bug fixes', 'fixed', 'fixes']
     def self.set_repo_latest_release(repo, client)
       repo_path = repo.owner + '/' + repo.name
-
-      latest_release_notes = ""
 
       begin
         releases = client.releases(repo_path)
@@ -40,40 +38,12 @@ module Services
       latest_tag_date = commit.commit.author.date
       latest_tag = latest_tag.name
 
-      if releases.nil? || releases.empty? || latest_tag_date - releases.first.published_at > 30
-        latest_release_date = commit.commit.author.date
-
-        begin
-          changelog_file = client.contents(repo_path)
-                            .filter { |file| file.name.match(Regexp.new("changelog.md", Regexp::IGNORECASE)) }
-                            .first
-          unless changelog_file.nil?
-            changelog_download_url = changelog_file.download_url
-            download = URI.open(changelog_download_url)
-            unless download.nil?
-              changelog = download.read
-              unless changelog.nil?
-                changelog_tag_index = changelog.index(/[\s#]+(#{latest_tag}|#{latest_tag.delete_prefix("v")})/)
-                prev_tag = latest_tag_index < tags.size - 1 ? tags[latest_tag_index + 1].name : nil
-                changelod_end_index = prev_tag.nil? ?
-                                        changelog.length :
-                                        changelog.index(/[\s#]+(#{prev_tag}|#{prev_tag.delete_prefix("v")})/)
-                latest_release_notes = changelog[changelog_tag_index..changelod_end_index]
-              end
-            end
-          end
-        rescue Octokit::Error => e
-          log_error e
-        end
+      if releases.nil? || releases.empty? || release_over_tag?(latest_tag, latest_tag_date, releases.first)
+        latest_release_date = latest_tag_date
+        latest_release_notes = read_changelog(repo_path, client, latest_tag_index)
       else
-        latest_release = releases.first
-        releases.each do |release|
-          latest_release = release
-          latest_tag = release.tag_name
-          if latest_release.nil? ? important_tag?(latest_tag) : important_release?(latest_release)
-            break
-          end
-        end
+        latest_release = find_latest_release releases
+
         latest_tag = latest_release.tag_name
         latest_release_notes = latest_release.body
         latest_release_date = latest_release.published_at
@@ -106,7 +76,7 @@ module Services
       end
 
       sep = $/.nil? ? "\n" : $/
-      if BUG_FIXES.any? { |p| release_notes.include?('##' + p + sep) || release_notes.include?(p + ':' + sep) } &&
+      if BUG_FIXES.any? { |p| release_notes.match?(/#+ *#{p}\s*#{sep}/) || release_notes.match?(/#{p}:\s*#{sep}/) } &&
         !NEW_FEATURES.any? { |p| release_notes.include? p }
         return false
       end
@@ -117,6 +87,59 @@ module Services
     def self.important_tag?(tag)
       tag = tag.downcase
       !(tag.include?("preview") || tag.include?("rc") || tag.include?("beta"))
+    end
+
+    def self.read_changelog(repo_path, client, latest_tag_index)
+      begin
+        changelog_file = client.contents(repo_path)
+                               .filter { |file| file.name.match(Regexp.new("changelog.md", Regexp::IGNORECASE)) }
+                               .first
+      rescue Octokit::Error => e
+        log_error e
+        return nil
+      end
+
+      if changelog_file.nil?
+        return nil
+      end
+
+      changelog_download_url = changelog_file.download_url
+      download = URI.open(changelog_download_url)
+      if download.nil?
+        return nil
+      end
+
+      changelog = download.read
+      unless changelog.nil?
+        changelog_tag_index = changelog.index(/[\s#]+(#{latest_tag}|#{latest_tag.delete_prefix("v")})/)
+        prev_tag = latest_tag_index < tags.size - 1 ? tags[latest_tag_index + 1].name : nil
+        changelod_end_index = prev_tag.nil? ?
+                                changelog.length :
+                                changelog.index(/[\s#]+(#{prev_tag}|#{prev_tag.delete_prefix("v")})/)
+        return changelog[changelog_tag_index..changelod_end_index]
+      end
+
+      nil
+    end
+
+    def self.find_latest_release(releases)
+      latest_release = releases.first
+      releases.each do |release|
+        latest_release = release
+        latest_tag = release.tag_name
+        if latest_release.nil? ? important_tag?(latest_tag) : important_release?(latest_release)
+          break
+        end
+      end
+
+      latest_release
+    end
+
+    def self.release_over_tag?(latest_tag_name, latest_tag_date, latest_release)
+      # 1. the release is less than approximately 4 months older than the tag      #
+      # 2. the tag and the release are of the same versioning level, e.g. rails 7.0.3 vs 7.0.3.1
+      latest_tag_date - latest_release.published_at > 30 * 4 &&
+        latest_tag_name.count('.') <= latest_release.tag_name.count('.')
     end
   end
 end
