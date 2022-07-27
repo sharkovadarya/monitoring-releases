@@ -1,0 +1,85 @@
+{
+  "sha": "733c5b9a9674b1e3411405344bf38fb14ec49c67",
+  "node_id": "C_kwDOAD59N9oAKDczM2M1YjlhOTY3NGIxZTM0MTE0MDUzNDRiZjM4ZmIxNGVjNDljNjc",
+  "commit": {
+    "author": {
+      "name": "Bozhidar Batsov",
+      "email": "bozhidar@batsov.dev",
+      "date": "2022-07-07T08:04:05Z"
+    },
+    "committer": {
+      "name": "Bozhidar Batsov",
+      "email": "bozhidar@batsov.dev",
+      "date": "2022-07-07T08:04:05Z"
+    },
+    "message": "Cut 1.31.2",
+    "tree": {
+      "sha": "f15d45265fb125a4509957f7ef503ee16a0adb38",
+      "url": "https://api.github.com/repos/rubocop/rubocop/git/trees/f15d45265fb125a4509957f7ef503ee16a0adb38"
+    },
+    "url": "https://api.github.com/repos/rubocop/rubocop/git/commits/733c5b9a9674b1e3411405344bf38fb14ec49c67",
+    "comment_count": 0,
+    "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null
+    }
+  },
+  "url": "https://api.github.com/repos/rubocop/rubocop/commits/733c5b9a9674b1e3411405344bf38fb14ec49c67",
+  "html_url": "https://github.com/rubocop/rubocop/commit/733c5b9a9674b1e3411405344bf38fb14ec49c67",
+  "comments_url": "https://api.github.com/repos/rubocop/rubocop/commits/733c5b9a9674b1e3411405344bf38fb14ec49c67/comments",
+  "author": {
+    "login": "bbatsov",
+    "id": 103882,
+    "node_id": "MDQ6VXNlcjEwMzg4Mg==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/103882?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/bbatsov",
+    "html_url": "https://github.com/bbatsov",
+    "followers_url": "https://api.github.com/users/bbatsov/followers",
+    "following_url": "https://api.github.com/users/bbatsov/following{/other_user}",
+    "gists_url": "https://api.github.com/users/bbatsov/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/bbatsov/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/bbatsov/subscriptions",
+    "organizations_url": "https://api.github.com/users/bbatsov/orgs",
+    "repos_url": "https://api.github.com/users/bbatsov/repos",
+    "events_url": "https://api.github.com/users/bbatsov/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/bbatsov/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "committer": {
+    "login": "bbatsov",
+    "id": 103882,
+    "node_id": "MDQ6VXNlcjEwMzg4Mg==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/103882?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/bbatsov",
+    "html_url": "https://github.com/bbatsov",
+    "followers_url": "https://api.github.com/users/bbatsov/followers",
+    "following_url": "https://api.github.com/users/bbatsov/following{/other_user}",
+    "gists_url": "https://api.github.com/users/bbatsov/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/bbatsov/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/bbatsov/subscriptions",
+    "organizations_url": "https://api.github.com/users/bbatsov/orgs",
+    "repos_url": "https://api.github.com/users/bbatsov/repos",
+    "events_url": "https://api.github.com/users/bbatsov/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/bbatsov/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "parents": [
+    {
+      "sha": "a55d878e7bafa1ec83ffb4ac21333a9cd66f7c58",
+      "url": "https://api.github.com/repos/rubocop/rubocop/commits/a55d878e7bafa1ec83ffb4ac21333a9cd66f7c58",
+      "html_url": "https://github.com/rubocop/rubocop/commit/a55d878e7bafa1ec83ffb4ac21333a9cd66f7c58"
+    }
+  ],
+  "stats": {
+    "total": 23,
+    "additions": 19,
+    "deletions": 4
+  },
+  "files": []
+}

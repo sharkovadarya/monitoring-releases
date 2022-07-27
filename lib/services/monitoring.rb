@@ -126,16 +126,16 @@ module Services
     end
 
     def self.find_latest_release(releases)
-      latest_release = releases.first
+      first_release = releases.first
       releases.each do |release|
         latest_release = release
         latest_tag = release.tag_name
         if latest_release.nil? ? important_tag?(latest_tag) : important_release?(latest_release)
-          break
+          return latest_release
         end
       end
 
-      latest_release
+      first_release
     end
 
     def self.release_over_tag?(latest_tag_name, latest_tag_date, latest_release)
