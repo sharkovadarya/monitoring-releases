@@ -58,11 +58,11 @@ class Repository < ApplicationRecord
       if prefix.nil? || suffix.nil?
         next
       end
-      if prefix.rstrip.ends_with? '##'
-        header_level = prefix.rstrip.match('##+$')[0]
+      if prefix.rstrip.ends_with? '#'
+        header_level = prefix.match('#+\s*$')[0]
         unless header_level.nil?
-          next_header_index = suffix.index header_level
-          return latest_release_notes[(i - header_level.length)..next_header_index]
+          next_header_index = suffix.index header_level.rstrip
+          return latest_release_notes[(i - header_level.length)..(i - header_level.length + next_header_index)]
         end
       end
     end
