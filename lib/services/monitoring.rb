@@ -1,4 +1,5 @@
 require 'octokit'
+require 'open-uri'
 
 module Services
   class Monitoring
@@ -17,25 +18,53 @@ module Services
         return
       end
 
-      if releases.nil? || releases.empty?
-        begin
-          tags = client.tags(repo_path)
-        rescue Octokit::Error => e
-          log_error e
-          return
-        end
+      begin
+        tags = client.tags(repo_path)
+      rescue Octokit::Error => e
+        log_error e
+        return
+      end
 
-        if tags.nil? || tags.empty?
-          return
-        end
-        latest_tag = tags.first.name
+      if tags.nil? || tags.empty?
+        return
+      end
+
+      latest_tag_index = tags.find_index { |tag| important_tag? tag.name }
+      latest_tag = tags[latest_tag_index]
+      begin
+        commit = client.commit(repo_path, latest_tag.commit.sha)
+      rescue Octokit::Error => e
+        log_error e
+        return
+      end
+      latest_tag_date = commit.commit.author.date
+      latest_tag = latest_tag.name
+
+      if releases.nil? || releases.empty? || latest_tag_date - releases.first.published_at > 30
+        latest_release_date = commit.commit.author.date
+
         begin
-          commit = client.commit(repo_path, tags.first.commit.sha)
+          changelog_file = client.contents(repo_path)
+                            .filter { |file| file.name.match(Regexp.new("changelog.md", Regexp::IGNORECASE)) }
+                            .first
+          unless changelog_file.nil?
+            changelog_download_url = changelog_file.download_url
+            download = URI.open(changelog_download_url)
+            unless download.nil?
+              changelog = download.read
+              unless changelog.nil?
+                changelog_tag_index = changelog.index(/[\s#]+(#{latest_tag}|#{latest_tag.delete_prefix("v")})/)
+                prev_tag = latest_tag_index < tags.size - 1 ? tags[latest_tag_index + 1].name : nil
+                changelod_end_index = prev_tag.nil? ?
+                                        changelog.length :
+                                        changelog.index(/[\s#]+(#{prev_tag}|#{prev_tag.delete_prefix("v")})/)
+                latest_release_notes = changelog[changelog_tag_index..changelod_end_index]
+              end
+            end
+          end
         rescue Octokit::Error => e
           log_error e
-          return
         end
-        latest_release_date = commit.commit.author.date
       else
         latest_release = releases.first
         releases.each do |release|

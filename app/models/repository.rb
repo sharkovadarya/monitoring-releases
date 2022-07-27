@@ -23,6 +23,9 @@ class Repository < ApplicationRecord
   end
 
   def release_notes_new_features
+    if latest_release_notes.nil?
+      return ""
+    end
     release_notes = latest_release_notes.downcase
     release_notes_from_header = release_notes_features_header release_notes
     unless release_notes_from_header.nil?

@@ -7,9 +7,7 @@ class RepositoriesController < ApplicationController
   end
 
   def index
-    # update_repo_tags
     @repositories = Repository.all.sort_by(&:latest_release_date).reverse!
-    # @repositories = Repository.all
     new
     @repositories
   end
@@ -52,6 +50,7 @@ class RepositoriesController < ApplicationController
   end
 
   def update_all_releases
+    Repository.clear_all
     Repository.refresh
   end
 
