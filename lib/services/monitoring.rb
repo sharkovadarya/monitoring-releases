@@ -40,7 +40,8 @@ module Services
 
       if releases.nil? || releases.empty? || release_over_tag?(latest_tag, latest_tag_date, releases.first)
         latest_release_date = latest_tag_date
-        latest_release_notes = read_changelog(repo_path, client, latest_tag_index)
+        prev_tag = latest_tag_index < tags.size - 1 ? tags[latest_tag_index + 1].name : nil
+        latest_release_notes = read_changelog(repo_path, client, latest_tag, prev_tag)
       else
         latest_release = find_latest_release releases
 
@@ -70,7 +71,10 @@ module Services
         return false
       end
 
-      release_notes = release.body.downcase
+      important_release_notes? release.body.downcase
+    end
+
+    def self.important_release_notes?(release_notes)
       if ONLY_BUG_FIXES.any? { |phrase| release_notes.include? phrase }
         return false
       end
@@ -89,7 +93,7 @@ module Services
       !(tag.include?("preview") || tag.include?("rc") || tag.include?("beta"))
     end
 
-    def self.read_changelog(repo_path, client, latest_tag_index)
+    def self.read_changelog(repo_path, client, latest_tag, prev_tag)
       begin
         changelog_file = client.contents(repo_path)
                                .filter { |file| file.name.match(Regexp.new("changelog.md", Regexp::IGNORECASE)) }
@@ -112,7 +116,6 @@ module Services
       changelog = download.read
       unless changelog.nil?
         changelog_tag_index = changelog.index(/[\s#]+(#{latest_tag}|#{latest_tag.delete_prefix("v")})/)
-        prev_tag = latest_tag_index < tags.size - 1 ? tags[latest_tag_index + 1].name : nil
         changelod_end_index = prev_tag.nil? ?
                                 changelog.length :
                                 changelog.index(/[\s#]+(#{prev_tag}|#{prev_tag.delete_prefix("v")})/)
