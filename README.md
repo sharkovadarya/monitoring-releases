@@ -1,24 +1,9 @@
-# README
+# Monitoring repositories
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This basic app monitors releases and tags for GitHub repositories (add one using the form at the top). The data is updated once every few hours. Releases take precendence over tags unless the latest release is significantly older.
 
-Things you may want to cover:
+To avoid the rate limit, the environment needs to have a `PERSONAL_ACCESS_TOKEN` variable defined.
 
-* Ruby version
+The repositories are sorted by the latest release date.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+The index page shows only the new features snippet whenever possible; to see the full notes, use the link at the top of each entry.
