@@ -1,0 +1,56 @@
+<h1>Repositories</h1>
+
+<div class="index-header">
+  <div class="repo-form">
+    <h4>Add a new repository</h4>
+    <%= render 'form' %>
+  </div>
+
+  <div class="clear-all">
+    <%= button_to 'Update release data', action: :update_all_releases %>
+  </div>
+</div>
+
+<div class="repo-view">
+  <table class="repo-table">
+    <thead>
+    <tr>
+      <td><b>Name</b></td>
+      <td><b>Latest tag</b></td>
+      <td><b>Latest release date</b></td>
+      <td><b>Latest release notes</b></td>
+      <td></td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @repositories.each do |repo| %>
+      <tr class="repo-row">
+        <td><a href=<%=repo.url%> target="_blank" ><%= repo.name %></a></td>
+        <% tag_class = repo.read ? "read" : "unread" %>
+        <td class=<%= tag_class %>><%= repo.latest_tag %></td>
+        <td><%= repo.latest_release_date.nil? ? "" : repo.latest_release_date.to_date %></td>
+        <td class="release-notes__td">
+          <div class="release-notes__container">
+            <div class="release-notes__content">
+              <%= link_to "See full entry", repository_path(repo), method: :get %><br><br>
+              <%= markdown repo.release_notes_new_features %>
+            </div>
+            <div class="release-notes__readmore">
+              <span>Expand</span>
+            </div>
+          </div>
+        </td>
+        <td>
+          <%= link_to "Destroy", repository_path(repo), data: {
+            turbo_method: :delete,
+            turbo_confirm: "Are you sure?"
+          } %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+</div>
+
